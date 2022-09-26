@@ -1,4 +1,4 @@
-# Initiating list from the one available on Éco bébé
+# Initiating list from the one available on Éco bébé, keeping it, but I made my own dataset from that and this code should not be used again
 library(tidyverse)
 library(rvest)
 url <-  "https://couchesecobebe.com/pages/liste-des-villes-municipalites-et-arrondissements-offrant-une-subvention-pour-lachat-de-couches-lavables"
@@ -33,4 +33,4 @@ links <- scraplinks(url)
 links <- links[29:284, ] |>
          filter(link != "")
 
-write.csv(links, file = "data/data-raw/municipalites_subventions/municipalites.csv", row.names = FALSE)
+# write.csv(links, file = "data/data-raw/municipalites_subventions/municipalites.csv", row.names = FALSE)

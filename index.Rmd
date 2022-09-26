@@ -1,0 +1,29 @@
+---
+title: "Subventions couches lavables"
+output:
+  html_document:
+    toc: false
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+```{r, echo = FALSE, warnings = FALSE, message = FALSE, fig.width = 14, fig.height = 7}
+library(mapview)
+mapviewOptions(fgb = FALSE)
+shp <- sf::st_read("./data/data-raw/subventions/subventions.geojson")
+
+# Mapview
+mv <- mapview(
+  shp, 
+  col.regions = "#20422f", 
+  layer.name = "Municipalités offrant une subvention"
+)
+mv
+```
