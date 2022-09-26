@@ -17,7 +17,7 @@ output:
 ```{r, echo = FALSE, warnings = FALSE, message = FALSE, fig.width = 14, fig.height = 7}
 library(mapview)
 mapviewOptions(fgb = FALSE)
-shp <- sf::st_read("./data/data-raw/subventions/subventions.geojson")
+shp <- sf::st_read("./data/data-raw/subventions/subventions.geojson", quiet = TRUE)
 
 # Mapview
 mv <- mapview(
