@@ -24,8 +24,8 @@ create_spatial <- function() {
   dplyr::arrange(MRC, Municipalite, Arrondissement)
   
   # Ajouter liens url vers les subventions 
-  shp <- dplyr::left_join(
-    shp, 
+  shp <- dplyr::left_join( 
+    shp,
     subv, 
     by = c("MRC", "Municipalite", "Arrondissement")
   ) |>
