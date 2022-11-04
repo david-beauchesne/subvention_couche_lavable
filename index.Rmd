@@ -16,8 +16,21 @@ output:
 
 ```{r, echo = FALSE, warnings = FALSE, message = FALSE, fig.width = 14, fig.height = 7}
 library(mapview)
+library(magrittr)
+library(kableExtra)
 mapviewOptions(fgb = FALSE)
 shp <- sf::st_read("./data/data-raw/subventions/subventions.geojson", quiet = TRUE)
+mrc <- table(shp$MRC)
+tab <- sf::st_drop_geometry(shp) |>
+       dplyr::mutate(links = glue::glue("[{Municipalite}]({Subvention})")) |> 
+       dplyr::select(links) |>
+       knitr::kable() |>
+       pack_rows(index = mrc, label_row_css = "background-color: #666; color: #fff;") |>
+       kable_paper("hover", full_width = F) |>
+       kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) |>
+       collapse_rows(columns = 1, valign = "top")
+
+tab
 
 # Mapview
 mv <- mapview(

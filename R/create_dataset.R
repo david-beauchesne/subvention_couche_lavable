@@ -1,6 +1,7 @@
 # Adjust dataset manually with shapefiles of municipalities
 # https://www.donneesquebec.ca/recherche/dataset/decoupages-administratifs/resource/b368d470-71d6-40a2-8457-e4419de2f9c0
-munip <- sf::st_read("data/data-raw/municipalites/munic_s.shp")
+# https://www.donneesquebec.ca/recherche/dataset/decoupages-administratifs/resource/a30825b5-82d2-491d-9783-c513fe36f231
+munip <- sf::st_read("data/data-raw/municipalites-1-100000/munic_s.shp")
 # arron <- sf::st_read("data/data-raw/municipalites/arron_s.shp")
 
 # Conserver uniquement les colonnes d'intérêt
@@ -8,7 +9,12 @@ munip <- dplyr::select(
   munip,
   MRC = MUS_NM_MRC,
   Municipalite = MUS_NM_MUN
-)
+) |>
+dplyr::arrange(MRC, Municipalite) |>
+dplyr::group_by(MRC, Municipalite) |>
+dplyr::summarise(geometry = sf::st_union(geometry)) |>
+dplyr::ungroup()
+
 # arron <- dplyr::select(
 #   arron, 
 #   Municipalite = ARS_NM_MUN,
@@ -29,16 +35,16 @@ munip <- dplyr::select(
 # dplyr::ungroup()
 
 # Retrait des TNO aquatiques et terrestres
-uid <- stringr::str_detect(shp$Municipalite, "TNO aquatique") |
-       stringr::str_detect(shp$Municipalite, "TNO terrestre")
-shp <- shp[!uid,]
+uid <- stringr::str_detect(munip$Municipalite, "TNO aquatique") |
+       stringr::str_detect(munip$Municipalite, "TNO terrestre")
+munip <- munip[!uid,]
 
 # data.frame only 
-dat <- sf::st_drop_geometry(shp)
+dat <- sf::st_drop_geometry(munip)
 write.csv(dat, file = "data/data-raw/subventions/municipalites_all.csv", row.names = FALSE)
 
 # export spatial 
-sf::st_write(shp, "data/data-raw/subventions/municipalites.geojson")
+sf::st_write(munip, "data/data-raw/subventions/municipalites.geojson")
 
 # # Initiating list from the one available on Éco bébé, keeping it, but I made my own dataset from that and this code should not be used again
 # library(tidyverse)
