@@ -38,7 +38,7 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 .DS_Store
-data/data-raw/municipalites-1-20000/
-data/data-raw/municipalites-1-100000/
-data/data-raw/subventions_BU/
-data/data-raw/subventions/
+data/municipalites-1-20000/
+data/municipalites-1-100000/
+data/subventions_BU/
+data/municipalites

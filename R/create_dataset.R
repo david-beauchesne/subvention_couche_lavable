@@ -1,8 +1,8 @@
 # Adjust dataset manually with shapefiles of municipalities
 # https://www.donneesquebec.ca/recherche/dataset/decoupages-administratifs/resource/b368d470-71d6-40a2-8457-e4419de2f9c0
 # https://www.donneesquebec.ca/recherche/dataset/decoupages-administratifs/resource/a30825b5-82d2-491d-9783-c513fe36f231
-munip <- sf::st_read("data/data-raw/municipalites-1-100000/munic_s.shp")
-# arron <- sf::st_read("data/data-raw/municipalites/arron_s.shp")
+munip <- sf::st_read("data/municipalites-1-100000/munic_s.shp")
+# arron <- sf::st_read("data/municipalites/arron_s.shp")
 
 # Conserver uniquement les colonnes d'intérêt
 munip <- dplyr::select(
@@ -41,10 +41,10 @@ munip <- munip[!uid,]
 
 # data.frame only 
 dat <- sf::st_drop_geometry(munip)
-write.csv(dat, file = "data/data-raw/subventions/municipalites_all.csv", row.names = FALSE)
+write.csv(dat, file = "data/municipalites/municipalites_all.csv", row.names = FALSE)
 
 # export spatial 
-sf::st_write(munip, "data/data-raw/subventions/municipalites.geojson")
+sf::st_write(munip, "data/municipalites/municipalites.geojson")
 
 # # Initiating list from the one available on Éco bébé, keeping it, but I made my own dataset from that and this code should not be used again
 # library(tidyverse)
@@ -69,5 +69,5 @@ sf::st_write(munip, "data/data-raw/subventions/municipalites.geojson")
 # links <- links[29:284, ] |>
 #          filter(link != "")
 # 
-# write.csv(links, file = "data/data-raw/subventions/subvention_list.csv", row.names = FALSE)
+# write.csv(links, file = "data/subventions/subvention_list.csv", row.names = FALSE)
 

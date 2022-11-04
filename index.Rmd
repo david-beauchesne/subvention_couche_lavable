@@ -19,7 +19,7 @@ library(mapview)
 library(magrittr)
 library(kableExtra)
 mapviewOptions(fgb = FALSE)
-shp <- sf::st_read("./data/data-raw/subventions/subventions.geojson", quiet = TRUE)
+shp <- sf::st_read("./data/subventions/subventions.geojson", quiet = TRUE)
 mrc <- table(shp$MRC)
 tab <- sf::st_drop_geometry(shp) |>
        dplyr::mutate(links = glue::glue("[{Municipalite}]({Subvention})")) |> 
